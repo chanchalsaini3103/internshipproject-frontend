@@ -13,6 +13,8 @@ function Login() {
     try {
       await axios.post('http://localhost:8081/auth/login', { email, password });
       alert('Login Successful');
+      localStorage.setItem("auth", "true");
+
       navigate('/dashboard');
     } catch (error) {
       alert('Invalid email or password.');
