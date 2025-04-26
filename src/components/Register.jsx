@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from '../services/axios'; // ✅ using custom axios instance
 import '../styles/AuthStyles.css';
-import axios from '../services/axios'; // ✅ custom axios with render backend URL
+
 
 
 function Register() {
