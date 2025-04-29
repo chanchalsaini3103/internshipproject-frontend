@@ -1,8 +1,7 @@
-// src/services/authService.js (or wherever you're keeping it)
-import axios from 'axios';
+// src/services/authService.js
+import axios from '../services/axios'; // ✅ use your custom axios instance!
 
-// ✅ Live backend on Render
-const API_URL = "https://internshipproject-backend.onrender.com/api/auth";
+const API_URL = "/api/auth"; // ✅ Relative URL, since baseURL is set in axios.js
 
 // User Registration
 export const register = (userData) => {
@@ -12,4 +11,14 @@ export const register = (userData) => {
 // User Login
 export const login = (userData) => {
   return axios.post(`${API_URL}/login`, userData);
+};
+
+// Forgot Password
+export const forgotPassword = (email) => {
+  return axios.post(`${API_URL}/forgot-password`, null, { params: { email } });
+};
+
+// Reset Password
+export const resetPassword = (token, newPassword) => {
+  return axios.post(`${API_URL}/reset-password`, null, { params: { token, newPassword } });
 };
