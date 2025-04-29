@@ -1,56 +1,30 @@
-import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import axios from '../services/axios'; // ✅ importing custom axios instance
-import '../styles/AuthStyles.css';
+import { useState } from "react";
+import { login } from "../services/authService";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [user, setUser] = useState({ email: '', passwordHash: '' });
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
-      await axios.post('/auth/login', { email, password });
-      alert('Login Successful');
-      localStorage.setItem("auth", "true");
-      navigate('/dashboard');
+      const res = await login(user);
+      localStorage.setItem('token', res.data); // Save JWT Token
+      alert('Login Successful!');
+      navigate('/dashboard'); // after login, move to dashboard
     } catch (error) {
-      console.error('Login failed:', error);
-      alert('Invalid email or password.');
+      alert('Login Failed! Check Credentials.');
     }
   };
 
   return (
-    <div className="container auth-container">
-      <div className="row justify-content-center">
-        <div className="col-md-4">
-          <div className="auth-card">
-            <h2>Login</h2>
-            <input
-              type="email"
-              className="form-control mb-3"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <input
-              type="password"
-              className="form-control mb-3"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <button className="btn btn-primary w-100" onClick={handleLogin}>
-              Login
-            </button>
-            <div className="auth-links">
-              <Link to="/forgot-password">Forgot Password?</Link><br />
-              <Link to="/register">New user? Register</Link>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <h2>Login</h2>
+      <input type="email" placeholder="Email" onChange={(e) => setUser({ ...user, email: e.target.value })} required />
+      <input type="password" placeholder="Password" onChange={(e) => setUser({ ...user, passwordHash: e.target.value })} required />
+      <button type="submit">Login</button>
+    </form>
   );
 }
 
