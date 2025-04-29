@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axios from '../services/axios'; // using your axios instance with base URL
+import axios from 'axios';
 import '../styles/PasswordResetStyles.css';
 
 function ForgotPassword() {
@@ -7,7 +7,7 @@ function ForgotPassword() {
 
   const handleForgotPassword = async () => {
     try {
-      await axios.post('/auth/forgot-password', { email });
+      await axios.post('https://internshipproject-backend.onrender.com/api/auth/forgot-password', { email });
       alert('Password reset email sent!');
     } catch (error) {
       alert('Email sending failed.');

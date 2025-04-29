@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axios from '../services/axios';
+import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import '../styles/PasswordResetStyles.css';
 
@@ -10,7 +10,7 @@ function ResetPassword() {
 
   const handleResetPassword = async () => {
     try {
-      await axios.post(`/auth/reset-password/${token}`, { newPassword });
+      await axios.post(`https://internshipproject-backend.onrender.com/api/auth/reset-password/${token}`, { newPassword });
       alert('Password reset successfully!');
       navigate('/');
     } catch (error) {
