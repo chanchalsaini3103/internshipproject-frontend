@@ -1,7 +1,7 @@
 // src/services/authService.js
-import axios from '../services/axios'; // ✅ use your custom axios instance!
+import axios from './axios'; // ✅ use your custom axios instance!
 
-const API_URL = "/api/auth"; // ✅ Relative URL, since baseURL is set in axios.js
+const API_URL = "/api/auth"; // ✅ Relative URL, baseURL is already set in axios.js
 
 // User Registration
 export const register = (userData) => {
@@ -15,10 +15,10 @@ export const login = (userData) => {
 
 // Forgot Password
 export const forgotPassword = (email) => {
-  return axios.post(`${API_URL}/forgot-password`, null, { params: { email } });
+  return axios.post(`${API_URL}/forgot-password`, { email });  // ✅ Send email in body
 };
 
 // Reset Password
 export const resetPassword = (token, newPassword) => {
-  return axios.post(`${API_URL}/reset-password`, null, { params: { token, newPassword } });
+  return axios.post(`${API_URL}/reset-password/${token}`, { newPassword }); // ✅ correct endpoint
 };
