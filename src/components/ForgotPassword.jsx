@@ -1,44 +1,38 @@
-import { useState } from "react";
-import axios from "../services/axios";
-import { useNavigate } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import "../styles/AuthStyles.css";
+import { useState } from 'react';
+import axios from '../services/axios'; // using your axios instance with base URL
+import '../styles/PasswordResetStyles.css';
 
 function ForgotPassword() {
   const [email, setEmail] = useState('');
-  const navigate = useNavigate();
 
-  const handleForgotPassword = async (e) => {
-    e.preventDefault();
+  const handleForgotPassword = async () => {
     try {
-      // ✅ Send reset email (token logic handled by backend)
-      await axios.post("/api/auth/forgot-password", null, {
-        params: { email },
-      });
-
-      // ✅ Show success toast, then navigate
-      toast.success('Reset link sent to your email!');
-      setTimeout(() => navigate("/login"), 2000); // short delay to show message
+      await axios.post('/auth/forgot-password', { email });
+      alert('Password reset email sent!');
     } catch (error) {
-      toast.error('Failed to send reset link. Please try again.');
+      alert('Email sending failed.');
     }
   };
 
   return (
-    <div className="auth-container">
-      <ToastContainer />
-      <form onSubmit={handleForgotPassword} className="auth-form">
-        <h2>Forgot Password</h2>
-        <input
-          type="email"
-          placeholder="Enter your email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <button type="submit">Send Reset Link</button>
-      </form>
+    <div className="container reset-container">
+      <div className="row justify-content-center">
+        <div className="col-md-5">
+          <div className="reset-card">
+            <h2>Forgot Password</h2>
+            <input
+              type="email"
+              className="form-control mb-3"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <button className="btn btn-primary w-100" onClick={handleForgotPassword}>
+              Send Reset Email
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

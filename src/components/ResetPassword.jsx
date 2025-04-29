@@ -1,43 +1,42 @@
-import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import axios from "../services/axios";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import "../styles/PasswordResetStyles.css";
+import { useState } from 'react';
+import axios from '../services/axios';
+import { useParams, useNavigate } from 'react-router-dom';
+import '../styles/PasswordResetStyles.css';
 
 function ResetPassword() {
-  const [password, setPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const { token } = useParams();
   const navigate = useNavigate();
-  const { token } = useParams(); // ✅ Get token from URL
 
-  const handleResetPassword = async (e) => {
-    e.preventDefault();
+  const handleResetPassword = async () => {
     try {
-      await axios.post("/api/auth/reset-password", { password }, {
-        params: { token } // ✅ Send token in query
-      });
-
-      toast.success("Password reset successful!");
-      setTimeout(() => navigate("/login"), 2000);
+      await axios.post(`/auth/reset-password/${token}`, { newPassword });
+      alert('Password reset successfully!');
+      navigate('/');
     } catch (error) {
-      toast.error("Invalid or expired link.");
+      alert('Reset password failed.');
     }
   };
 
   return (
-    <div className="auth-container">
-      <ToastContainer />
-      <form onSubmit={handleResetPassword} className="auth-form">
-        <h2>Reset Password</h2>
-        <input
-          type="password"
-          placeholder="Enter new password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <button type="submit">Reset Password</button>
-      </form>
+    <div className="container reset-container">
+      <div className="row justify-content-center">
+        <div className="col-md-5">
+          <div className="reset-card">
+            <h2>Reset Password</h2>
+            <input
+              type="password"
+              className="form-control mb-3"
+              placeholder="Enter new password"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+            />
+            <button className="btn btn-success w-100" onClick={handleResetPassword}>
+              Reset Password
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
