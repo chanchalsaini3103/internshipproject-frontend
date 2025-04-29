@@ -15,10 +15,10 @@ export const login = (userData) => {
 
 // Forgot Password
 export const forgotPassword = (email) => {
-  return axios.post(`${API_URL}/forgot-password`, { email });  // ✅ Send email in body
+  return axios.post(`${API_URL}/forgot-password`, { email });  
 };
 
 // Reset Password
 export const resetPassword = (token, newPassword) => {
-  return axios.post(`${API_URL}/reset-password/${token}`, { newPassword }); // ✅ correct endpoint
+  return axios.post(`${API_URL}/reset-password/${token}`, { newPassword }); 
 };
