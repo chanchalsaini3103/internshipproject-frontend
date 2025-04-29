@@ -13,7 +13,7 @@ function Login() {
     e.preventDefault();
     try {
       const res = await login(user);
-      localStorage.setItem('token', res.data); // Save JWT Token
+      localStorage.setItem('token', res.data);
       toast.success('Login Successful!');
       navigate('/dashboard');
     } catch (error) {
@@ -26,7 +26,6 @@ function Login() {
       <ToastContainer />
       <form onSubmit={handleSubmit} className="auth-form">
         <h2>Login</h2>
-
         <input
           type="email"
           placeholder="Email"
@@ -41,7 +40,6 @@ function Login() {
           onChange={(e) => setUser({ ...user, passwordHash: e.target.value })}
           required
         />
-
         <button type="submit">Login</button>
 
         <p>Forgot your password?</p>

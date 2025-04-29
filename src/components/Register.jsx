@@ -18,7 +18,7 @@ function Register() {
     e.preventDefault();
     try {
       await register(user);
-      toast.success('Registration Successful! Check your email for verification.');
+      toast.success('Registration Successful! Check your email.');
       navigate('/login');
     } catch (error) {
       toast.error('Registration Failed! Try Again.');
@@ -52,7 +52,6 @@ function Register() {
           onChange={(e) => setUser({ ...user, passwordHash: e.target.value })}
           required
         />
-
         <select
           value={user.role}
           onChange={(e) => setUser({ ...user, role: e.target.value })}

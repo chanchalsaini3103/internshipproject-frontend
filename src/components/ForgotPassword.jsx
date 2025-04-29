@@ -1,6 +1,8 @@
 import { useState } from "react";
-import axios from "../services/axios"; // (your custom axios instance)
+import axios from "../services/axios";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "../styles/AuthStyles.css";
 
 function ForgotPassword() {
@@ -13,15 +15,16 @@ function ForgotPassword() {
       await axios.post("/api/auth/forgot-password", null, {
         params: { email },
       });
-      alert('Reset link sent to your email!');
+      toast.success('Reset link sent to your email!');
       navigate('/login');
     } catch (error) {
-      alert('Failed to send reset link. Try again.');
+      toast.error('Failed to send reset link. Try again.');
     }
   };
 
   return (
     <div className="auth-container">
+      <ToastContainer />
       <form onSubmit={handleForgotPassword} className="auth-form">
         <h2>Forgot Password</h2>
         <input
