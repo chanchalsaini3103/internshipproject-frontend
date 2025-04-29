@@ -1,25 +1,26 @@
 import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "../services/axios";
-import { useParams, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "../styles/AuthStyles.css";
+import "../styles/PasswordResetStyles.css";
 
 function ResetPassword() {
-  const { token } = useParams();
-  const [newPassword, setNewPassword] = useState('');
+  const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  const { token } = useParams(); // ✅ Get token from URL
 
   const handleResetPassword = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("/api/auth/reset-password", null, {
-        params: { token, newPassword },
+      await axios.post("/api/auth/reset-password", { password }, {
+        params: { token } // ✅ Send token in query
       });
-      toast.success('Password reset successful!');
-      setTimeout(() => navigate('/success'), 2000);
+
+      toast.success("Password reset successful!");
+      setTimeout(() => navigate("/login"), 2000);
     } catch (error) {
-      toast.error('Failed to reset password.');
+      toast.error("Invalid or expired link.");
     }
   };
 
@@ -31,8 +32,8 @@ function ResetPassword() {
         <input
           type="password"
           placeholder="Enter new password"
-          value={newPassword}
-          onChange={(e) => setNewPassword(e.target.value)}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
           required
         />
         <button type="submit">Reset Password</button>

@@ -12,13 +12,16 @@ function ForgotPassword() {
   const handleForgotPassword = async (e) => {
     e.preventDefault();
     try {
+      // ✅ Send reset email (token logic handled by backend)
       await axios.post("/api/auth/forgot-password", null, {
         params: { email },
       });
+
+      // ✅ Show success toast, then navigate
       toast.success('Reset link sent to your email!');
-      navigate('/login');
+      setTimeout(() => navigate("/login"), 2000); // short delay to show message
     } catch (error) {
-      toast.error('Failed to send reset link. Try again.');
+      toast.error('Failed to send reset link. Please try again.');
     }
   };
 
