@@ -1,6 +1,7 @@
+// src/services/authService.js (or wherever you're keeping it)
 import axios from 'axios';
 
-// ✅ API URL - Replace with your Render backend URL
+// ✅ Live backend on Render
 const API_URL = "https://internshipproject-backend.onrender.com/api/auth";
 
 // User Registration
